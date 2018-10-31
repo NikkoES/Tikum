@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Tikum</string>
+    <string name="maps_api_key">AIzaSyCqR8eHs9IPez_8WCZ04gF7UyAKSZ9hBLY</string>
+
+    <string name="tab_home">Beranda</string>
+    <string name="tab_toko">Toko Sepeda</string>
+    <string name="tab_account">Akun</string>
+    <string name="menu_toko">Toko Sepeda</string>
+    <string name="menu_akun">Pengaturan Akun</string>
+
+    //authentication
+    <string name="id_user">ID User</string>
+    <string name="login">Masuk</string>
+    <string name="lupa_password">Lupa Password ?</string>
+    <string name="belum_punya_akun">Belum punya akun ? Daftar di sini</string>
+    <string name="reg_nama">Nama Lengkap</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_no_hp">Nomor HP</string>
+    <string name="reg_password">Password</string>
+    <string name="password_lama">Password Lama</string>
+    <string name="password_baru">Password Baru</string>
+    <string name="password_baru_2">Ulangi Password Baru</string>
+    <string name="simpan">Simpan</string>
+    <string name="register">Daftar</string>
+    <string name="kirim">Kirim</string>
+    <string name="sudah_punya_akun">Sudah punya akun ? Masuk di sini</string>
+    <string name="login_berhasil">Berhasil Masuk</string>
+    <string name="register_berhasil">Berhasil Daftar</string>
+    <string name="masukkan_email_reset">Masukkan Email untuk mereset Password</string>
+
+    <!--dialog-->
+    <string name="data_password_belum_lengkap">Data password belum lengkap !</string>
+    <string name="password_baru_tidak_match">Password baru tidak match !</string>
+    <string name="password_lama_salah">Password lama salah !</string>
+    <string name="berhasil_disimpan">Data berhasil disimpan</string>
+    <string name="gagal_disimpan">Data gagal disimpan !</string>
+    <string name="berhasil_diubah">Data berhasil diubah</string>
+    <string name="gagal_diubah">Data gagal diubah !</string>
+    <string name="berhasil_dihapus">Data berhasil dihapus</string>
+    <string name="gagal_dihapus">Data gagal dihapus !</string>
+    <string name="data_kosong">Data belum diisi !</string>
+    <string name="gagal_login_not_match">Login Gagal (Email dan Password tidak cocok) !</string>
+    <string name="gagal_register">Gagal daftar !</string>
+    <string name="gagal_koneksi">Gagal koneksi !</string>
+    <string name="koneksi_internet_bermasalah">Koneksi internet bermasalah !</string>
+    <string name="yakin_ingin_keluar">Apakah anda yakin ingin keluar ?</string>
+    <string name="data_belum_lengkap">Data belum Lengkap !</string>
+    <string name="yakin_ingin_reset_password">Anda yakin ingin mereset password ?</string>
+    <string name="yakin_ingin_mereset">Anda yakin ingin mengatur ulang data ?</string>
+    <string name="ya">Ya</string>
+    <string name="tidak">Tidak</string>
+    <string name="batal">Batal</string>
+    <string name="hapus">Hapus</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

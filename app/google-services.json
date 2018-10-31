@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "843497690902",
+    "firebase_url": "https://tikum-b3911.firebaseio.com",
+    "project_id": "tikum-b3911",
+    "storage_bucket": "tikum-b3911.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843497690902:android:6a584cad4776cd0a",
+        "android_client_info": {
+          "package_name": "com.tokosepeda.tikum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843497690902-dlbk61037pn11nombi6idnet6sem6bta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tokosepeda.tikum",
+            "certificate_hash": "7de2a021cbfa08d9a78f42711f9606d3a979f1a2"
+          }
+        },
+        {
+          "client_id": "843497690902-lv1a2vh9jo0556jc5d2hq53c56of1vtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlCT3kPSKPnw7rwvu2HtqGto7q7Uh-8HU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843497690902-lv1a2vh9jo0556jc5d2hq53c56of1vtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

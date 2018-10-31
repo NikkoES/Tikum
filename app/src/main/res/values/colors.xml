@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0eae4c</color>
+    <color name="colorPrimaryDark">#098138</color>
+    <color name="colorAccent">#2da2d8</color>
+    <color name="colorGray">#8e8e8e</color>
+
+    <color name="colorRed">#ff0004</color>
+    <color name="colorYellow">#ff9d00</color>
+
+    <color name="textColorBlack">#333D49</color>
+    <color name="textColorWhite">#fff</color>
+
+    <color name="bottomtab_item_resting">#9a020101</color>
+    <color name="bottomtab_item_disabled">#82000000</color>
+
+    <color name="bottomtab">#fafafa</color>
+    <color name="bottomtab_active">#076fca</color>
+
+    <color name="bg_dark">#263238</color>
+
+    <color name="divider_light">#0c000000</color>
+
+    <color name="blueFirst">#6a92d9</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#db5754</color>
+    <color name="green">#54dbbd</color>
+    <color name="txt_green">#00ffc6</color>
+    <color name="black">#232323</color>
+</resources>
