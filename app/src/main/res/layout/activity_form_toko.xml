@@ -21,8 +21,7 @@
                 android:id="@+id/image_toko"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_toko_green" />
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/btn_ganti_foto"
@@ -137,7 +136,7 @@
                     android:id="@+id/et_sparepart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Tempat Lahir"
+                    android:hint="Sparepart"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>

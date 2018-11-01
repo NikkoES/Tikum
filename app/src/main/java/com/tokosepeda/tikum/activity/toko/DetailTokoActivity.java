@@ -59,7 +59,7 @@ public class DetailTokoActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        Glide.with(this).load(toko.getImageToko()).into(imageFoto);
+        Glide.with(getApplicationContext()).load(toko.getImageToko()).into(imageFoto);
         txtNamaToko.setText(toko.getNamaToko());
         txtEmailToko.setText(toko.getEmailToko());
         txtNomorToko.setText(toko.getNoHp());
@@ -84,6 +84,12 @@ public class DetailTokoActivity extends AppCompatActivity {
                 sendIntent.putExtra("jid", toko.getNoHp() +"@s.whatsapp.net");
                 sendIntent.setPackage("com.whatsapp");
                 startActivity(sendIntent);
+                break;
+            case R.id.btn_navigasi:
+                Uri gmmIntentUri = Uri.parse("google.navigation:q="+toko.getLatToko()+","+toko.getLongToko()+"");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
                 break;
         }
     }

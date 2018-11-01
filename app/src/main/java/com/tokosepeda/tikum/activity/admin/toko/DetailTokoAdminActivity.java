@@ -54,7 +54,7 @@ public class DetailTokoAdminActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        Glide.with(this).load(toko.getImageToko()).into(imageFoto);
+        Glide.with(getApplicationContext()).load(toko.getImageToko()).into(imageFoto);
         txtNamaToko.setText(toko.getNamaToko());
         txtEmailToko.setText(toko.getEmailToko());
         txtNomorToko.setText(toko.getNoHp());

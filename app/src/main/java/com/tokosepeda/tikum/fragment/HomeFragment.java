@@ -244,8 +244,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         }
         mMap.setMyLocationEnabled(true);
 
-        int height = 100;
-        int width = 100;
+        int height = 70;
+        int width = 70;
 
         //icon marker
         BitmapDrawable bitToko = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_bike);

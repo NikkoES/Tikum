@@ -62,7 +62,7 @@ public class DetailTemanActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        Glide.with(this).load(teman.getFoto()).into(imageFoto);
+        Glide.with(getApplicationContext()).load(teman.getFoto()).into(imageFoto);
         txtNama.setText(teman.getNamaUser());
         txtId.setText("#"+teman.getIdUser());
         txtJenisKelamin.setText(teman.getJenisKelamin());

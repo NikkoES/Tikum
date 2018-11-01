@@ -15,6 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tokosepeda.tikum.R;
 import com.tokosepeda.tikum.adapter.TokoAdapter;
 import com.tokosepeda.tikum.model.Toko;
@@ -43,6 +48,8 @@ public class TokoFragment extends Fragment {
     LocationManager locationManager;
     LocationListener listener;
 
+    DatabaseReference dbToko;
+
     public TokoFragment() {
         // Required empty public constructor
     }
@@ -55,6 +62,8 @@ public class TokoFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_toko, container, false);
         ButterKnife.bind(this, v);
 
+        dbToko = FirebaseDatabase.getInstance().getReference("toko");
+
         initLocation();
         initTokoData();
         initRecyclerView();
@@ -63,26 +72,35 @@ public class TokoFragment extends Fragment {
     }
 
     private void initTokoData() {
-        listAllToko.add(new Toko("1", "Toko Sepeda 1", "toko@gmail.com", "08226227436","Cipadung, Bandung", "-6.92746", "107.71706",  "list sparepart", ""));
-        listAllToko.add(new Toko("2", "Toko Sepeda 2", "toko@gmail.com", "08988190546","Cinunuk, Bandung", "-6.93760", "107.72246",  "list sparepart", ""));
-        listAllToko.add(new Toko("3", "Toko Sepeda 3", "toko@gmail.com", "08965552374","Ujung Berung, Bandung", "-6.93972", "107.71205",  "list sparepart", ""));
-        listAllToko.add(new Toko("4", "Toko Sepeda 4", "toko@gmail.com", "0857826893","Cilengkrang, Bandung", "-6.92775", "107.73265",  "list sparepart", ""));
-        listAllToko.add(new Toko("5", "Toko Sepeda 5", "toko@gmail.com", "0899471774","Cipadung, Bandung", "-6.92937", "107.71878",  "list sparepart", ""));
-        listAllToko.add(new Toko("6", "Toko Sepeda 6", "toko@gmail.com", "08787765473","Manisi, Bandung", "-6.92707", "107.72376",  "list sparepart", ""));
+        dbToko.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listAllToko.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Toko toko = postSnapshot.getValue(Toko.class);
+                    listAllToko.add(toko);
+                }
+                for (int i = 0; i < listAllToko.size(); i++) {
+                    final Toko toko = listAllToko.get(i);
 
-        for (int i = 0; i < listAllToko.size(); i++) {
-            final Toko toko = listAllToko.get(i);
+                    Location tokoLocation = new Location("");
+                    tokoLocation.setLatitude(Double.parseDouble(toko.getLatToko()));
+                    tokoLocation.setLongitude(Double.parseDouble(toko.getLongToko()));
 
-            Location tokoLocation = new Location("");
-            tokoLocation.setLatitude(Double.parseDouble(toko.getLatToko()));
-            tokoLocation.setLongitude(Double.parseDouble(toko.getLongToko()));
+                    float distance = myLocation.distanceTo(tokoLocation);
 
-            float distance = myLocation.distanceTo(tokoLocation);
-
-            if (distance < 3000) {
-                listToko.add(listAllToko.get(i));
+                    if (distance < 3000) {
+                        listToko.add(listAllToko.get(i));
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
             }
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initLocation() {

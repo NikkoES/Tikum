@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tokosepeda.tikum.R;
 import com.tokosepeda.tikum.activity.admin.toko.DetailTokoAdminActivity;
 import com.tokosepeda.tikum.activity.admin.toko.FormTokoActivity;
@@ -45,8 +47,10 @@ public class TokoAdminAdapter extends RecyclerView.Adapter<TokoAdminAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Toko toko = listToko.get(position);
+        final DatabaseReference dbToko = FirebaseDatabase.getInstance().getReference("toko").child(toko.getIdToko());
+
         Glide.with(context).load(toko.getImageToko()).into(holder.imageToko);
         holder.txtNamaToko.setText(toko.getNamaToko());
         holder.txtAlamatToko.setText(toko.getAlamatToko());
@@ -71,7 +75,10 @@ public class TokoAdminAdapter extends RecyclerView.Adapter<TokoAdminAdapter.View
                                 context.startActivity(intent);
                                 break;
                             case R.id.action_hapus:
-                                Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
+                                dbToko.removeValue();
+
+                                listToko.remove(position);
+                                notifyDataSetChanged();
                                 break;
                         }
                         return false;

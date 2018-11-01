@@ -76,22 +76,24 @@ public class LoginActivity extends AppCompatActivity {
                 editor.apply();
                 startActivity(new Intent(this, DashboardAdminActivity.class));
             }
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Intent profileIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(profileIntent);
-                                finish();
+            else{
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Intent profileIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(profileIntent);
+                                    finish();
 
-                                loading.dismiss();
+                                    loading.dismiss();
+                                }
                             }
-                        }
-                    });
+                        });
+            }
         }
     }
 

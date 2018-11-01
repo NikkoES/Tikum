@@ -1,5 +1,7 @@
 package com.tokosepeda.tikum.activity.admin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -42,12 +44,27 @@ public class DashboardAdminActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_keluar)
     public void buttonKeluar(){
-        SharedPreferences.Editor editor = getSharedPreferences("session", MODE_PRIVATE).edit();
-        editor.putString("user", "user");
-        editor.apply();
+        new AlertDialog.Builder(DashboardAdminActivity.this)
+                .setTitle(getString(R.string.yakin_ingin_keluar))
+                .setPositiveButton(getString(R.string.ya), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = getSharedPreferences("session", MODE_PRIVATE).edit();
+                        editor.putString("user", "user");
+                        editor.apply();
 
-        Intent i = new Intent(this, LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+                        Intent i = new Intent(DashboardAdminActivity.this, LoginActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
+                })
+                .setNegativeButton(getString(R.string.tidak), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 }

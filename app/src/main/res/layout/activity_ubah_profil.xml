@@ -22,7 +22,7 @@
                 android:layout_width="125dp"
                 android:layout_height="125dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_account" />
+                tools:src="@drawable/ic_account" />
 
             <TextView
                 android:id="@+id/btn_ganti_foto"
