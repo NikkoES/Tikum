@@ -115,7 +115,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         dbPertemanan = FirebaseDatabase.getInstance().getReference("users");
         dbTeman = FirebaseDatabase.getInstance().getReference("friends").child(id);
 
-        initTemanData();
         updateData(new MyCallback() {
             @Override
             public void onCallback(User value) {
@@ -148,44 +147,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             requestLocation();
         if (!isLocationEnabled())
             showAlert(1);
-    }
-
-    private void initTemanData() {
-        dbTeman.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listTeman.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Teman teman = postSnapshot.getValue(Teman.class);
-                    listTeman.add(teman);
-                }
-                dbPertemanan.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        listPertemanan.clear();
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            User user = postSnapshot.getValue(User.class);
-                            for (int i = 0; i < listTeman.size(); i++) {
-                                Teman teman = listTeman.get(i);
-                                if (teman.getId().equalsIgnoreCase(user.getId())) {
-                                    listPertemanan.add(user);
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void updateData(final MyCallback myCallback) {
@@ -247,12 +208,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         int height = 70;
         int width = 70;
 
-        //icon marker
+//        icon marker
         BitmapDrawable bitToko = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_bike);
         BitmapDrawable bitMine = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_mine);
         Bitmap bToko = bitToko.getBitmap();
         Bitmap bMine = bitMine.getBitmap();
-        Bitmap smallMarkerToko = Bitmap.createScaledBitmap(bToko, width, height, false);
+        final Bitmap smallMarkerToko = Bitmap.createScaledBitmap(bToko, width, height, false);
         Bitmap smallMarkerMine = Bitmap.createScaledBitmap(bMine, width, height, false);
 
         //init my location
@@ -261,68 +222,101 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             return;
         }
         final Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        LatLng lokasiMember = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+        LatLng lokasiMember;
+        if(myLocation!=null){
+            lokasiMember = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+        }
+        else {
+            lokasiMember = new LatLng(-6.914744, 107.609810);
+        }
         mMap.addMarker(new MarkerOptions().position(lokasiMember).title("Lokasi saya").icon(BitmapDescriptorFactory.fromBitmap(smallMarkerMine)));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(lokasiMember).zoom(15).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        for (int i = 0; i < listPertemanan.size(); i++) {
-            final User user = listPertemanan.get(i);
-
-            Location tokoLocation = new Location("");
-            tokoLocation.setLatitude(Double.parseDouble(user.getLatitude()));
-            tokoLocation.setLongitude(Double.parseDouble(user.getLongitude()));
-
-            float distance = myLocation.distanceTo(tokoLocation);
-
-            if (distance < 3000) {
-                LatLng lokasiToko = new LatLng(Double.parseDouble(user.getLatitude()), Double.parseDouble(user.getLongitude()));
-                mMap.addMarker(new MarkerOptions().position(lokasiToko).title(user.getNamaUser()).snippet("#" + user.getIdUser()).icon(BitmapDescriptorFactory.fromBitmap(smallMarkerToko)));
-                mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
+        dbTeman.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listTeman.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Teman teman = postSnapshot.getValue(Teman.class);
+                    listTeman.add(teman);
+                }
+                dbPertemanan.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public View getInfoWindow(Marker arg0) {
-                        return null;
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        listPertemanan.clear();
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            User user = postSnapshot.getValue(User.class);
+                            for (int i = 0; i < listTeman.size(); i++) {
+                                Teman teman = listTeman.get(i);
+                                if (teman.getId().equalsIgnoreCase(user.getId())) {
+                                    listPertemanan.add(user);
+                                }
+                            }
+                        }
+                        for (int i = 0; i < listPertemanan.size(); i++) {
+                            final User user = listPertemanan.get(i);
+
+                            LatLng lokasiTeman = new LatLng(Double.parseDouble(user.getLatitude()), Double.parseDouble(user.getLongitude()));
+                            mMap.addMarker(new MarkerOptions().position(lokasiTeman).title(user.getNamaUser()).snippet("#" + user.getIdUser()).icon(BitmapDescriptorFactory.fromBitmap(smallMarkerToko)));
+                            mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                                @Override
+                                public View getInfoWindow(Marker arg0) {
+                                    return null;
+                                }
+
+                                @Override
+                                public View getInfoContents(Marker marker) {
+
+                                    LinearLayout info = new LinearLayout(getContext());
+                                    info.setOrientation(LinearLayout.VERTICAL);
+
+                                    TextView title = new TextView(getContext());
+                                    title.setTextColor(Color.BLACK);
+                                    title.setGravity(Gravity.CENTER);
+                                    title.setTypeface(null, Typeface.BOLD);
+                                    title.setText(marker.getTitle());
+
+                                    TextView snippet = new TextView(getContext());
+                                    snippet.setTextColor(Color.GRAY);
+                                    snippet.setGravity(Gravity.CENTER);
+                                    snippet.setText(marker.getSnippet());
+
+                                    info.addView(title);
+                                    info.addView(snippet);
+
+                                    return info;
+                                }
+                            });
+                        }
+
+                        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                            @Override
+                            public void onInfoWindowClick(Marker marker) {
+                                for (int i = 0; i < listPertemanan.size(); i++) {
+                                    User user = listPertemanan.get(i);
+                                    if (marker.getTitle().equalsIgnoreCase(user.getNamaUser())) {
+                                        Intent intent = new Intent(getContext(), DetailTemanActivity.class);
+                                        intent.putExtra("teman", user);
+                                        startActivity(intent);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
                     }
 
                     @Override
-                    public View getInfoContents(Marker marker) {
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        LinearLayout info = new LinearLayout(getContext());
-                        info.setOrientation(LinearLayout.VERTICAL);
-
-                        TextView title = new TextView(getContext());
-                        title.setTextColor(Color.BLACK);
-                        title.setGravity(Gravity.CENTER);
-                        title.setTypeface(null, Typeface.BOLD);
-                        title.setText(marker.getTitle());
-
-                        TextView snippet = new TextView(getContext());
-                        snippet.setTextColor(Color.GRAY);
-                        snippet.setGravity(Gravity.CENTER);
-                        snippet.setText(marker.getSnippet());
-
-                        info.addView(title);
-                        info.addView(snippet);
-
-                        return info;
                     }
                 });
             }
-        }
 
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                for (int i = 0; i < listPertemanan.size(); i++) {
-                    User user = listPertemanan.get(i);
-                    if (marker.getTitle().equalsIgnoreCase(user.getNamaUser())) {
-                        Intent intent = new Intent(getContext(), DetailTemanActivity.class);
-                        intent.putExtra("teman", user);
-                        startActivity(intent);
-                        break;
-                    }
-                }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 

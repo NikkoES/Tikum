@@ -78,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            loading.dismiss();
                         } else {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String id = user.getUid();

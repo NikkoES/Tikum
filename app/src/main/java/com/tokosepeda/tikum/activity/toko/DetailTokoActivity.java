@@ -76,14 +76,17 @@ public class DetailTokoActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_whatsapp:
-                Intent sendIntent =new Intent("android.intent.action.MAIN");
-                sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.setType("text/plain");
-                sendIntent.putExtra(Intent.EXTRA_TEXT,"");
-                sendIntent.putExtra("jid", toko.getNoHp() +"@s.whatsapp.net");
-                sendIntent.setPackage("com.whatsapp");
-                startActivity(sendIntent);
+                String phone = toko.getNoHp();
+                String waPhone;
+                if(phone.substring(0,1).equalsIgnoreCase("0")){
+                    waPhone = "62" + phone.substring(1);
+                }
+                else{
+                    waPhone = phone;
+                }
+                String urlWhatsapp = "https://api.whatsapp.com/send?phone="+waPhone;
+                Intent waIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlWhatsapp));
+                startActivity(waIntent);
                 break;
             case R.id.btn_navigasi:
                 Uri gmmIntentUri = Uri.parse("google.navigation:q="+toko.getLatToko()+","+toko.getLongToko()+"");

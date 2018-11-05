@@ -2,7 +2,9 @@ package com.tokosepeda.tikum.fragment;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,9 +13,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tokosepeda.tikum.R;
+import com.tokosepeda.tikum.activity.MainActivity;
 import com.tokosepeda.tikum.adapter.TokoAdapter;
 import com.tokosepeda.tikum.model.Toko;
 
@@ -87,11 +92,7 @@ public class TokoFragment extends Fragment {
                     tokoLocation.setLatitude(Double.parseDouble(toko.getLatToko()));
                     tokoLocation.setLongitude(Double.parseDouble(toko.getLongToko()));
 
-                    float distance = myLocation.distanceTo(tokoLocation);
-
-                    if (distance < 3000) {
-                        listToko.add(listAllToko.get(i));
-                    }
+                    listToko.add(listAllToko.get(i));
                 }
                 mAdapter.notifyDataSetChanged();
             }
@@ -110,8 +111,13 @@ public class TokoFragment extends Fragment {
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         myLocation = new Location("");
-        myLocation.setLatitude(location.getLatitude());
-        myLocation.setLongitude(location.getLongitude());
+        if(location!=null){
+            myLocation.setLatitude(location.getLatitude());
+            myLocation.setLongitude(location.getLongitude());
+        }else{
+            myLocation.setLatitude(-6.914744);
+            myLocation.setLongitude(107.609810);
+        }
     }
 
     private void initRecyclerView() {

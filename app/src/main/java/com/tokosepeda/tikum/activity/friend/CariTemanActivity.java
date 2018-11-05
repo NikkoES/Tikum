@@ -123,7 +123,7 @@ public class CariTemanActivity extends AppCompatActivity implements SearchView.O
         final TextView txtJenisKelamin = promptView.findViewById(R.id.txt_jenis_kelamin);
         final Button btnAction = promptView.findViewById(R.id.btn_action);
 
-        Glide.with(this).load(user.getFoto()).into(imageFoto);
+        Glide.with(getApplicationContext()).load(user.getFoto()).into(imageFoto);
         txtNama.setText(user.getNamaUser());
         txtIdUser.setText(user.getIdUser());
         txtJenisKelamin.setText(user.getJenisKelamin());

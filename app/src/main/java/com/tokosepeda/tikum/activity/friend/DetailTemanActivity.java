@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -83,14 +84,17 @@ public class DetailTemanActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_whatsapp:
-                Intent sendIntent =new Intent("android.intent.action.MAIN");
-                sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.setType("text/plain");
-                sendIntent.putExtra(Intent.EXTRA_TEXT,"");
-                sendIntent.putExtra("jid", teman.getNomorHp() +"@s.whatsapp.net");
-                sendIntent.setPackage("com.whatsapp");
-                startActivity(sendIntent);
+                String phone = teman.getNomorHp();
+                String waPhone;
+                if(phone.substring(0,1).equalsIgnoreCase("0")){
+                    waPhone = "62" + phone.substring(1);
+                }
+                else{
+                    waPhone = phone;
+                }
+                String urlWhatsapp = "https://api.whatsapp.com/send?phone="+waPhone;
+                Intent waIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlWhatsapp));
+                startActivity(waIntent);
                 break;
         }
     }
