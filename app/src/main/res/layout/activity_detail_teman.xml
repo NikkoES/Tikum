@@ -52,26 +52,6 @@
                     tools:text="#1234"/>
 
                 <TextView
-                    android:id="@+id/txt_jenis_kelamin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorBlack"
-                    tools:text="Laki-laki"/>
-
-                <TextView
-                    android:id="@+id/txt_ttl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorBlack"
-                    tools:text="Jakarta, 04 Oktober 1997"/>
-
-                <TextView
                     android:id="@+id/txt_no_hp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,16 +72,6 @@
                     tools:text="nikkoeka04@gmail.com"/>
 
                 <TextView
-                    android:id="@+id/txt_alamat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorBlack"
-                    tools:text="Cibiru, Bandung"/>
-
-                <TextView
                     android:id="@+id/txt_sepeda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,15 +81,15 @@
                     android:textColor="@color/textColorBlack"
                     tools:text="Eversine"/>
 
-                <TextView
-                    android:id="@+id/txt_outfit"
+                <Button
+                    android:id="@+id/btn_follow_unfollow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorBlack"
-                    tools:text="Helmet"/>
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="5dp"
+                    tools:text="follow"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"/>
 
             </LinearLayout>
 

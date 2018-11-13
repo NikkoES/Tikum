@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             email = etEmail.getText().toString();
             password = etPassword.getText().toString();
 
-            if(email.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")){
+            if(email.equalsIgnoreCase("admin") && password.equalsIgnoreCase("4dmin")){
                 SharedPreferences.Editor editor = getSharedPreferences("session", MODE_PRIVATE).edit();
                 editor.putString("user", "admin");
                 editor.apply();

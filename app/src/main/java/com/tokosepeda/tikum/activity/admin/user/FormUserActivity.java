@@ -59,47 +59,17 @@ public class FormUserActivity extends AppCompatActivity {
     EditText etNoHp;
     @BindView(R.id.et_password)
     EditText etPassword;
-    @BindView(R.id.rg_jenis_kelamin)
-    RadioGroup rgJenisKelamin;
-    @BindView(R.id.rb_laki)
-    RadioButton rbLaki;
-    @BindView(R.id.rb_perempuan)
-    RadioButton rbPerempuan;
-    @BindView(R.id.et_alamat)
-    EditText etAlamat;
-    @BindView(R.id.et_tempat_lahir)
-    EditText etTempatLahir;
-    @BindView(R.id.et_tanggal_lahir)
-    EditText etTanggalLahir;
     @BindView(R.id.et_jenis_sepeda)
     EditText etJenisSepeda;
-    @BindView(R.id.et_jenis_outfit)
-    EditText etJenisOutfit;
 
     User user;
-    String id, idUser, nama, email, noHp, password, jenisKelamin, alamat, tempatLahir, tanggalLahir, jenisSepeda, jenisOutfit;
+    String id, idUser, nama, email, noHp, password, jenisSepeda;
     String mode;
 
     FirebaseAuth mAuth;
     DatabaseReference dbUser;
 
     private ProgressDialog loading, loading2;
-
-    Calendar myCalendar = Calendar.getInstance();
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            String myFormat = "dd/MM/yyyy";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-            etTanggalLahir.setText(sdf.format(myCalendar.getTime()));
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,16 +112,7 @@ public class FormUserActivity extends AppCompatActivity {
                 etNama.setText(user.getNamaUser());
                 etEmail.setText(user.getEmail());
                 etNoHp.setText(user.getNomorHp());
-                if (user.getJenisKelamin().equalsIgnoreCase("Laki-laki")) {
-                    rbLaki.setChecked(true);
-                } else if (user.getJenisKelamin().equalsIgnoreCase("Perempuan")) {
-                    rbPerempuan.setChecked(true);
-                }
-                etAlamat.setText(user.getAlamat());
-                etTempatLahir.setText(user.getTempatLahir());
-                etTanggalLahir.setText(user.getTanggalLahir());
                 etJenisSepeda.setText(user.getSepeda());
-                etJenisOutfit.setText(user.getOutfit());
                 loading2.dismiss();
             }
 
@@ -160,13 +121,6 @@ public class FormUserActivity extends AppCompatActivity {
                 loading2.dismiss();
             }
         });
-    }
-
-    @OnClick(R.id.et_tanggal_lahir)
-    public void getTanggalLahir() {
-        new DatePickerDialog(this, date, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick(R.id.btn_simpan)
@@ -202,41 +156,13 @@ public class FormUserActivity extends AppCompatActivity {
         } else {
             noHp = "";
         }
-        int genderId = rgJenisKelamin.getCheckedRadioButtonId();
-        if (genderId == R.id.rb_laki) {
-            jenisKelamin = "Laki-laki";
-        } else if (genderId == R.id.rb_perempuan) {
-            jenisKelamin = "Perempuan";
-        } else {
-            jenisKelamin = "";
-        }
-        if (!TextUtils.isEmpty(etAlamat.getText().toString())) {
-            alamat = etAlamat.getText().toString();
-        } else {
-            alamat = "";
-        }
-        if (!TextUtils.isEmpty(etTempatLahir.getText().toString())) {
-            tempatLahir = etTempatLahir.getText().toString();
-        } else {
-            tempatLahir = "";
-        }
-        if (!TextUtils.isEmpty(etTanggalLahir.getText().toString())) {
-            tanggalLahir = etTanggalLahir.getText().toString();
-        } else {
-            tanggalLahir = "";
-        }
         if (!TextUtils.isEmpty(etJenisSepeda.getText().toString())) {
             jenisSepeda = etJenisSepeda.getText().toString();
         } else {
             jenisSepeda = "";
         }
-        if (!TextUtils.isEmpty(etJenisOutfit.getText().toString())) {
-            jenisOutfit = etJenisOutfit.getText().toString();
-        } else {
-            jenisOutfit = "";
-        }
         if(mode.equalsIgnoreCase("edit")){
-            dbUser.setValue(new User(id, idUser, nama, email, noHp, jenisKelamin, alamat, tempatLahir, tanggalLahir, "", jenisSepeda, jenisOutfit));
+            dbUser.setValue(new User(id, idUser, nama, email, noHp, "", jenisSepeda));
         }
         else{
             mAuth.createUserWithEmailAndPassword(email, password).
@@ -255,13 +181,8 @@ public class FormUserActivity extends AppCompatActivity {
                                         nama,
                                         email,
                                         noHp,
-                                        jenisKelamin,
-                                        alamat,
-                                        tempatLahir,
-                                        tanggalLahir,
                                         "",
-                                        jenisSepeda,
-                                        jenisOutfit));
+                                        jenisSepeda));
                             }
                         }
                     });

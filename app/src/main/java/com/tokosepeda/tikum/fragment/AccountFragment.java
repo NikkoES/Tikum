@@ -9,17 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tokosepeda.tikum.R;
-import com.tokosepeda.tikum.activity.MainActivity;
 import com.tokosepeda.tikum.activity.account.GantiPasswordActivity;
 import com.tokosepeda.tikum.activity.account.UbahProfilActivity;
 import com.tokosepeda.tikum.activity.auth.LoginActivity;
-import com.tokosepeda.tikum.activity.friend.CariTemanActivity;
 import com.tokosepeda.tikum.firebase.FirebaseApplication;
 
 import butterknife.ButterKnife;
@@ -53,13 +50,9 @@ public class AccountFragment extends Fragment {
         return v;
     }
 
-    @OnClick({R.id.btn_cari_teman, R.id.btn_edit_profile, R.id.btn_change_password, R.id.btn_keluar})
+    @OnClick({R.id.btn_edit_profile, R.id.btn_change_password, R.id.btn_keluar})
     public void actionButton(View v){
         switch (v.getId()){
-            case R.id.btn_cari_teman : {
-                startActivity(new Intent(getContext(), CariTemanActivity.class));
-                break;
-            }
             case R.id.btn_edit_profile : {
                 startActivity(new Intent(getContext(), UbahProfilActivity.class));
                 break;

@@ -17,25 +17,10 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/image_foto"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_gravity="center"
-                tools:src="@drawable/ic_account" />
-
-            <TextView
-                android:id="@+id/btn_ganti_foto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Ubah Foto"
-                android:textColor="@color/colorPrimaryDark" />
-
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/et_id"
@@ -52,11 +37,12 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_nama"
+                    android:id="@+id/et_id_grup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nama Lengkap"
-                    android:inputType="textPersonName" />
+                    android:focusable="false"
+                    android:hint="ID Group"
+                    android:inputType="number" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -65,11 +51,11 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_email"
+                    android:id="@+id/et_nama_grup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
+                    android:hint="Nama Grup"
+                    android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -78,23 +64,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_no_hp"
+                    android:id="@+id/et_deskripsi_grup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nomor HP"
-                    android:inputType="phone" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et_jenis_sepeda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Jenis Sepeda"
+                    android:hint="Deskripsi Grup"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>

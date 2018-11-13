@@ -1,9 +1,5 @@
 package com.tokosepeda.tikum.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.support.annotation.ColorRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -13,18 +9,13 @@ import android.os.Bundle;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.tokosepeda.tikum.R;
 import com.tokosepeda.tikum.adapter.bottomnav.BottomBarAdapter;
 import com.tokosepeda.tikum.adapter.bottomnav.NoSwipePager;
-import com.tokosepeda.tikum.firebase.FirebaseApplication;
 import com.tokosepeda.tikum.fragment.AccountFragment;
+import com.tokosepeda.tikum.fragment.GroupFragment;
 import com.tokosepeda.tikum.fragment.HomeFragment;
+import com.tokosepeda.tikum.fragment.TemanFragment;
 import com.tokosepeda.tikum.fragment.TokoFragment;
 import com.tokosepeda.tikum.model.User;
 
@@ -63,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case 2 : {
+                        getSupportActionBar().setTitle(R.string.menu_teman);
+                        break;
+                    }
+                    case 3 : {
+                        getSupportActionBar().setTitle(R.string.menu_grup);
+                        break;
+                    }
+                    case 4 : {
                         getSupportActionBar().setTitle(R.string.menu_akun);
                         break;
                     }
@@ -88,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         pagerAdapter.addFragments(new HomeFragment());
         pagerAdapter.addFragments(new TokoFragment());
+        pagerAdapter.addFragments(new TemanFragment());
+        pagerAdapter.addFragments(new GroupFragment());
         pagerAdapter.addFragments(new AccountFragment());
 
         viewPager.setAdapter(pagerAdapter);
@@ -140,11 +141,15 @@ public class MainActivity extends AppCompatActivity {
     private void addBottomNavigationItems() {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_home, R.drawable.ic_home, R.color.bottomtab);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_toko, R.drawable.ic_toko, R.color.bottomtab);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_account, R.drawable.ic_account, R.color.bottomtab);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_teman, R.drawable.ic_account, R.color.bottomtab);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.tab_group, R.drawable.ic_group, R.color.bottomtab);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.tab_account, R.drawable.ic_setting, R.color.bottomtab);
 
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
         bottomNavigation.addItem(item3);
+        bottomNavigation.addItem(item4);
+        bottomNavigation.addItem(item5);
     }
 
 
@@ -156,5 +161,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private int fetchColor(@ColorRes int color) {
         return ContextCompat.getColor(this, color);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        moveTaskToBack(true);
     }
 }

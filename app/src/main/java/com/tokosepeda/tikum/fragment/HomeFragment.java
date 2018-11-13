@@ -85,7 +85,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     private UiSettings mUiSettings;
 
     List<User> listUser = new ArrayList<>();
-    List<User> listPertemanan = new ArrayList<>();
     List<Teman> listTeman = new ArrayList<>();
 
     private FragmentActivity myContext;
@@ -149,6 +148,17 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             showAlert(1);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateData(new MyCallback() {
+            @Override
+            public void onCallback(User value) {
+                dbUser.setValue(value);
+            }
+        });
+    }
+
     public void updateData(final MyCallback myCallback) {
         locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -203,7 +213,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mMap.setMyLocationEnabled(true);
+//        mMap.setMyLocationEnabled(true);
 
         int height = 70;
         int width = 70;
@@ -211,10 +221,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 //        icon marker
         BitmapDrawable bitToko = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_bike);
         BitmapDrawable bitMine = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_mine);
+        BitmapDrawable bitTeman = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_teman);
         Bitmap bToko = bitToko.getBitmap();
         Bitmap bMine = bitMine.getBitmap();
+        Bitmap bTeman = bitTeman.getBitmap();
         final Bitmap smallMarkerToko = Bitmap.createScaledBitmap(bToko, width, height, false);
         Bitmap smallMarkerMine = Bitmap.createScaledBitmap(bMine, width, height, false);
+        final Bitmap smallMarkerTeman = Bitmap.createScaledBitmap(bTeman, width, height, false);
 
         //init my location
         locationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
@@ -223,16 +236,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         }
         final Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         LatLng lokasiMember;
-        if(myLocation!=null){
+        if (myLocation != null) {
             lokasiMember = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-        }
-        else {
+        } else {
             lokasiMember = new LatLng(-6.914744, 107.609810);
         }
-        mMap.addMarker(new MarkerOptions().position(lokasiMember).title("Lokasi saya").icon(BitmapDescriptorFactory.fromBitmap(smallMarkerMine)));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(lokasiMember).zoom(15).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+        //tampil marker teman
         dbTeman.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -244,61 +254,83 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
                 dbPertemanan.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        listPertemanan.clear();
+                        listUser.clear();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             User user = postSnapshot.getValue(User.class);
                             for (int i = 0; i < listTeman.size(); i++) {
                                 Teman teman = listTeman.get(i);
                                 if (teman.getId().equalsIgnoreCase(user.getId())) {
-                                    listPertemanan.add(user);
+                                    Double latitude, longitude;
+                                    if (user.getLatitude().equalsIgnoreCase("")) {
+                                        latitude = 0.0;
+                                    } else {
+                                        latitude = Double.parseDouble(user.getLatitude());
+                                    }
+                                    if (user.getLongitude().equalsIgnoreCase("")) {
+                                        longitude = 0.0;
+                                    } else {
+                                        longitude = Double.parseDouble(user.getLongitude());
+                                    }
+                                    LatLng lokasiTeman = new LatLng(latitude, longitude);
+                                    mMap.addMarker(new MarkerOptions().position(lokasiTeman).title(user.getNamaUser()).snippet("#" + user.getIdUser()).icon(BitmapDescriptorFactory.fromBitmap(smallMarkerToko)));
+                                } else {
+                                    Double latitude, longitude;
+                                    if (user.getLatitude().equalsIgnoreCase("")) {
+                                        latitude = 0.0;
+                                    } else {
+                                        latitude = Double.parseDouble(user.getLatitude());
+                                    }
+                                    if (user.getLongitude().equalsIgnoreCase("")) {
+                                        longitude = 0.0;
+                                    } else {
+                                        longitude = Double.parseDouble(user.getLongitude());
+                                    }
+                                    LatLng lokasiTeman = new LatLng(latitude, longitude);
+                                    mMap.addMarker(new MarkerOptions().position(lokasiTeman).title(user.getNamaUser()).snippet("#" + user.getIdUser()).icon(BitmapDescriptorFactory.fromBitmap(smallMarkerTeman)));
                                 }
                             }
+                            listUser.add(user);
                         }
-                        for (int i = 0; i < listPertemanan.size(); i++) {
-                            final User user = listPertemanan.get(i);
 
-                            LatLng lokasiTeman = new LatLng(Double.parseDouble(user.getLatitude()), Double.parseDouble(user.getLongitude()));
-                            mMap.addMarker(new MarkerOptions().position(lokasiTeman).title(user.getNamaUser()).snippet("#" + user.getIdUser()).icon(BitmapDescriptorFactory.fromBitmap(smallMarkerToko)));
-                            mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
-                                @Override
-                                public View getInfoWindow(Marker arg0) {
-                                    return null;
-                                }
+                            @Override
+                            public View getInfoWindow(Marker arg0) {
+                                return null;
+                            }
 
-                                @Override
-                                public View getInfoContents(Marker marker) {
+                            @Override
+                            public View getInfoContents(Marker marker) {
 
-                                    LinearLayout info = new LinearLayout(getContext());
-                                    info.setOrientation(LinearLayout.VERTICAL);
+                                LinearLayout info = new LinearLayout(getContext());
+                                info.setOrientation(LinearLayout.VERTICAL);
 
-                                    TextView title = new TextView(getContext());
-                                    title.setTextColor(Color.BLACK);
-                                    title.setGravity(Gravity.CENTER);
-                                    title.setTypeface(null, Typeface.BOLD);
-                                    title.setText(marker.getTitle());
+                                TextView title = new TextView(getContext());
+                                title.setTextColor(Color.BLACK);
+                                title.setGravity(Gravity.CENTER);
+                                title.setTypeface(null, Typeface.BOLD);
+                                title.setText(marker.getTitle());
 
-                                    TextView snippet = new TextView(getContext());
-                                    snippet.setTextColor(Color.GRAY);
-                                    snippet.setGravity(Gravity.CENTER);
-                                    snippet.setText(marker.getSnippet());
+                                TextView snippet = new TextView(getContext());
+                                snippet.setTextColor(Color.GRAY);
+                                snippet.setGravity(Gravity.CENTER);
+                                snippet.setText(marker.getSnippet());
 
-                                    info.addView(title);
-                                    info.addView(snippet);
+                                info.addView(title);
+                                info.addView(snippet);
 
-                                    return info;
-                                }
-                            });
-                        }
+                                return info;
+                            }
+                        });
 
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
-                                for (int i = 0; i < listPertemanan.size(); i++) {
-                                    User user = listPertemanan.get(i);
+                                for (int i = 0; i < listUser.size(); i++) {
+                                    User user = listUser.get(i);
                                     if (marker.getTitle().equalsIgnoreCase(user.getNamaUser())) {
                                         Intent intent = new Intent(getContext(), DetailTemanActivity.class);
-                                        intent.putExtra("teman", user);
+                                        intent.putExtra("detail_teman", user);
                                         startActivity(intent);
                                         break;
                                     }
@@ -319,6 +351,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
             }
         });
+
+        mMap.addMarker(new MarkerOptions().position(lokasiMember).title("Lokasi saya").icon(BitmapDescriptorFactory.fromBitmap(smallMarkerMine)));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(lokasiMember).zoom(15).build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
     }
 

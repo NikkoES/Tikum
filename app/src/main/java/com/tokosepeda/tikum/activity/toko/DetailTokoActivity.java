@@ -67,7 +67,7 @@ public class DetailTokoActivity extends AppCompatActivity {
         txtSparepart.setText(toko.getSparePart());
     }
 
-    @OnClick({R.id.btn_kontak, R.id.btn_whatsapp})
+    @OnClick({R.id.btn_kontak, R.id.btn_whatsapp, R.id.btn_navigasi})
     public void actionButton(View v) {
         switch (v.getId()) {
             case R.id.btn_kontak:

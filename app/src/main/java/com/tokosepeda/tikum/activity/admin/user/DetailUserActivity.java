@@ -21,20 +21,12 @@ public class DetailUserActivity extends AppCompatActivity {
     TextView txtNama;
     @BindView(R.id.txt_id)
     TextView txtId;
-    @BindView(R.id.txt_jenis_kelamin)
-    TextView txtJenisKelamin;
-    @BindView(R.id.txt_ttl)
-    TextView txtTTL;
     @BindView(R.id.txt_no_hp)
     TextView txtNoHp;
     @BindView(R.id.txt_email)
     TextView txtEmail;
-    @BindView(R.id.txt_alamat)
-    TextView txtAlamat;
     @BindView(R.id.txt_sepeda)
     TextView txtSepeda;
-    @BindView(R.id.txt_outfit)
-    TextView txtOutfit;
 
     User user;
 
@@ -61,13 +53,9 @@ public class DetailUserActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(user.getFoto()).into(imageFoto);
         txtNama.setText(user.getNamaUser());
         txtId.setText("#"+user.getIdUser());
-        txtJenisKelamin.setText(user.getJenisKelamin());
-        txtTTL.setText(user.getTempatLahir()+", "+user.getTanggalLahir());
         txtNoHp.setText(user.getNomorHp());
         txtEmail.setText(user.getEmail());
-        txtAlamat.setText(user.getAlamat());
         txtSepeda.setText(user.getSepeda());
-        txtOutfit.setText(user.getOutfit());
     }
 
     @Override

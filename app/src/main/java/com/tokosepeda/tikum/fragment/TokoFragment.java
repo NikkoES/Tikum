@@ -77,6 +77,7 @@ public class TokoFragment extends Fragment {
     }
 
     private void initTokoData() {
+        listToko.clear();
         dbToko.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

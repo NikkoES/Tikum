@@ -21,6 +21,8 @@ import com.tokosepeda.tikum.activity.MainActivity;
 import com.tokosepeda.tikum.model.User;
 import com.tokosepeda.tikum.utils.DialogUtils;
 
+import org.w3c.dom.Text;
+
 import java.util.Random;
 
 import butterknife.BindView;
@@ -35,10 +37,12 @@ public class RegisterActivity extends AppCompatActivity {
     EditText etEmail;
     @BindView(R.id.et_no_hp)
     EditText etPhoneNumber;
+    @BindView(R.id.et_jenis_sepeda)
+    EditText etJenisSepeda;
     @BindView(R.id.et_password)
     EditText etPassword;
 
-    String nama, email, phone, password;
+    String nama, email, phone, password, jenisSepeda;
 
     private ProgressDialog loading;
 
@@ -59,18 +63,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_register)
     public void register() {
-        if (TextUtils.isEmpty(etNama.getText().toString()) || TextUtils.isEmpty(etEmail.getText().toString()) || TextUtils.isEmpty(etPhoneNumber.getText().toString()) || TextUtils.isEmpty(etPassword.getText().toString())) {
+        if (TextUtils.isEmpty(etNama.getText().toString()) || TextUtils.isEmpty(etEmail.getText().toString()) || TextUtils.isEmpty(etPhoneNumber.getText().toString()) || TextUtils.isEmpty(etPassword.getText().toString()) || TextUtils.isEmpty(etJenisSepeda.getText().toString())) {
             Toast.makeText(this, getString(R.string.data_belum_lengkap), Toast.LENGTH_SHORT).show();
         } else {
             nama = etNama.getText().toString();
             email = etEmail.getText().toString();
             phone = etPhoneNumber.getText().toString();
             password = etPassword.getText().toString();
-            registerData(nama, email, phone, password);
+            jenisSepeda = etJenisSepeda.getText().toString();
+            registerData(nama, email, phone, password, jenisSepeda);
         }
     }
 
-    private void registerData(final String nama, final String email, final String phone, String password) {
+    private void registerData(final String nama, final String email, final String phone, String password, final String jenisSepeda) {
         loading.show();
         mAuth.createUserWithEmailAndPassword(email, password).
                 addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -91,12 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     email,
                                     phone,
                                     "",
-                                    "",
-                                    "",
-                                    "",
-                                    "",
-                                    "",
-                                    ""));
+                                    jenisSepeda));
 
                             Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));

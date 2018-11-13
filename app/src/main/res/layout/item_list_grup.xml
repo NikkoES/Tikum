@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cv_teman"
+    android:id="@+id/cv_grup"
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,27 +21,27 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/ic_account" />
+            android:src="@drawable/marker_bike" />
 
         <TextView
-            android:id="@+id/txt_nama_teman"
+            android:id="@+id/txt_nama_grup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:layout_toRightOf="@+id/image_foto"
-            tools:text="Nama Teman"/>
+            tools:text="Nama Grup"/>
 
         <TextView
-            android:id="@+id/txt_nomor_teman"
+            android:id="@+id/txt_deskripsi_grup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:layout_toRightOf="@+id/image_foto"
-            android:layout_below="@id/txt_nama_teman"
+            android:layout_below="@id/txt_nama_grup"
             android:textColor="@color/textColorBlack"
-            tools:text="08988190546"/>
+            tools:text="Deskripsi"/>
 
     </RelativeLayout>
 

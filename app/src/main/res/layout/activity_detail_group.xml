@@ -10,20 +10,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/image_foto"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_account" />
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,17 +24,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txt_nama"
+                    android:id="@+id/txt_nama_grup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:textColor="@color/colorPrimaryDark"
-                    tools:text="Nikko Eka Saputra"/>
+                    tools:text="Nama Grup"/>
 
                 <TextView
-                    android:id="@+id/txt_id"
+                    android:id="@+id/txt_id_grup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -52,38 +44,34 @@
                     tools:text="#1234"/>
 
                 <TextView
-                    android:id="@+id/txt_no_hp"
+                    android:id="@+id/txt_deskripsi_grup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="8dp"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/textColorBlack"
-                    tools:text="08988190546"/>
+                    tools:text="deskripsi grup"/>
 
-                <TextView
-                    android:id="@+id/txt_email"
+                <Button
+                    android:id="@+id/btn_join"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorBlack"
-                    tools:text="nikkoeka04@gmail.com"/>
-
-                <TextView
-                    android:id="@+id/txt_sepeda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/textColorBlack"
-                    tools:text="Eversine"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/textColorWhite"
+                    android:textStyle="bold"
+                    tools:text="gabung"/>
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_anggota"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_list_grup" />
 
     </LinearLayout>
 
